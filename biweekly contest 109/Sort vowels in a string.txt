@@ -1,0 +1,39 @@
+class Solution {
+public:
+    string sortVowels(string s) {
+        
+        set<char> lower = {'a', 'e', 'i', 'o', 'u'};
+        set<char> upper = { 'A', 'E', 'I', 'O', 'U'};
+        
+        vector<int> freq(256, 0);
+        
+        for(auto i : s) {
+            if(lower.count(i) > 0) freq[i]++;
+            if(upper.count(i) > 0) freq[i]++;
+        }
+        
+      //   for(int i = 0; i < 256; i++) {
+      //     if(freq[i] > 0) {
+      //         for(int j = 0; j < freq[i]; j++) cout << char(i);
+      //     }
+      // }  
+        
+        string ans = "";
+        int id = 0;
+        for(int i = 0; i < s.size(); i++) {
+            
+            if(lower.count(s[i]) == 0 && upper.count(s[i]) == 0) {
+                ans.push_back(s[i]);
+            }
+            else {
+                while(id < 256 && freq[id] == 0) id++;
+                ans.push_back(char(id));
+                freq[id]--;
+            }
+        }
+      
+        
+      
+        return ans;
+    }
+};

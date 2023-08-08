@@ -1,0 +1,26 @@
+class Solution {
+public:
+    long mod = 1e9+7;
+    long long dp[500][500];
+    long long solve(int n, int cur, int x) {
+        if(n <= 0) return n+1;
+        
+        long long cal = pow(cur, x);
+        if(cal > n) return 0;
+        
+        if(dp[n][cur] != -1) return dp[n][cur];
+        
+        long long take = solve(n-cal, cur+1, x);
+        long long notTake = solve(n, cur+1, x);
+        
+        return dp[n][cur] = (take%mod + notTake%mod) % mod;
+        
+    }
+    int numberOfWays(int n, int x) {
+        
+        memset(dp, -1, sizeof(dp));
+        
+        
+        return solve(n, 1, x);
+    }
+};

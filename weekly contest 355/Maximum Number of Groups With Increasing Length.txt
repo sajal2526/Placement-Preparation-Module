@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int check(vector<long long> &arr, long long mid) {
+        int n = arr.size();
+        for(int i = n-1; i >= 0; i--) {
+            if(mid == 0) return true;
+            long long req = (mid * (mid+1)) / 2;
+            if(req > arr[i]) return false;
+            mid--;
+        }
+        return true;
+    }
+    int maxIncreasingGroups(vector<int>& arr) {
+        
+        sort(arr.begin(), arr.end());
+        int n = arr.size();
+        vector<long long> pre(arr.begin(), arr.end());
+        for(int i = 1; i < n; i++) 
+            pre[i] += pre[i-1];
+        
+        int left = 1, right = n, ans = 0;
+        while(left <= right) {
+            
+            long long mid = (left + right) / 2;
+            
+            if(check(pre, mid)) {
+                ans = mid;
+                left = mid+1;
+            }
+            else
+                right = mid-1;
+        }
+        
+        return ans;
+    }
+};
