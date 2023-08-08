@@ -1,0 +1,33 @@
+class Solution {
+public:
+    long long min(long long a, long long b) {
+        return a <= b ? a : b;
+    }
+    long long check(vector<int> &arr, long long minute) {
+        long long total = 0;
+        for(auto i : arr) {
+            total += min(i, minute);
+        }
+        return total;
+    }
+    long long maxRunTime(int n, vector<int>& arr) {
+        long long low = 0, high = accumulate(arr.begin(), arr.end(), 0L) / n;
+        long long ans = 0;
+        while(low <= high) {
+            long long mid = (low + high) / 2;
+            long long cur = check(arr, mid);
+            if(cur >= mid*n) {
+                ans = mid;
+                low = mid+1;
+            }
+            else 
+                high = mid-1;
+        }
+        return ans;
+    }
+};
+            
+// 12 
+// [11,89,16,32,70,67,35,35,31,24,41,29,6,53,78,83]
+// 5
+// [64,43,34,23,21,12,4,2]
